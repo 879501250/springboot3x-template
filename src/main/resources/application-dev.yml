@@ -1,0 +1,145 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: mijiu-app
+
+  datasource:
+    #druid数据源配置
+    druid:
+      url: jdbc:mysql://localhost/build?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: abc4k321
+      # 初始化连接池大小
+      initialSize: 5
+      # 最小连接数
+      minIdle: 5
+      # 最大连接数
+      maxActive: 40
+      # 获取连接时的最大等待时间
+      maxWait: 60000
+      #间隔多长时间进行一次检测；
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间。
+      #        minEvictableIdleTimeMillis: 300000
+      # 用来检测连接是否有效的sql，要求是一个查询语句
+      validationQuery: SELECT 1
+      # 申请连接的时候检测
+      testWhileIdle: true
+      # 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能
+      poolPreparedStatements: true
+      #每个数据库连接在德鲁伊连接池中最多可以缓存 20 个预编译语句。当你的应用程序需要执行 SQL 查询时，德鲁伊连接池会尽可能地重用这些预编译语句，从而减少每次执行 SQL 查询时重新编译语句的开销，提高数据库访问的效率。
+      maxPoolPreparedStatementPerConnectionSize: 20
+      #启用全局的数据源监控统计
+      useGlobalDataSourceStat: true
+      #配置过滤器，过滤掉静态文件
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: /druid/*,*.js,*.css,*.gif,*.jpg,*.bmp,*.png,*.ico
+      #配置可视化控制台页面
+      stat-view-servlet:
+        enabled: true
+        #访问德鲁伊监控页面的地址
+        url-pattern: /druid/*
+        #IP白名单 没有配置或者为空 则允许所有访问
+        allow:
+        #IP黑名单 若白名单也存在 则优先使用
+        deny:
+        #禁用重置按钮
+        reset-enable: true
+        #登录所用的用户名与密码
+        login-username: admin
+        login-password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      #      password: 123456
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+
+  #邮件服务配置
+  mail:
+    host: smtp.qq.com #邮件服务器地址
+    protocol: smtp #协议
+    username: 3053292716@qq.com #发送邮件的邮箱也就是你开通服务的邮箱
+    password: fiwvcegicvigdeei #授权码
+    default-encoding: utf-8 #邮件内容的编码
+
+#mp配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    #打印sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  global-config:
+    db-config:
+      #id自增类型配置
+      id-type: ASSIGN_ID
+      #逻辑删除字段配置
+      logic-delete-field: is_delete
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+    #控制台mybatis-plus标记
+    banner: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: '蒾酒'
+      paths-to-match: '/**'
+      #生成文档所需的扫包路径，一般为启动类目录
+      packages-to-scan: com.mijiu
+
+
+#knife4j配置
+knife4j:
+  #是否启用增强设置
+  enable: true
+  #开启生产环境屏蔽
+  production: false
+  #是否启用登录认证
+  basic:
+    enable: false
+    username: admin
+    password: 123456
+  setting:
+    language: zh_cn
+    enable-version: true
+    enable-swagger-models: true
+    swagger-model-name: 用户模块
+
+jwt:
+  secret: 123456
+  expiration: 43200000 #12h
+
+aliyun:
+  #  oss:
+  #    access-key-id: LTAI5t7Kt1Ez3cge3safasf #密钥id
+  #    access-key-secret: on45H8Wasfasfasfasasfsa #密钥secret
+  #    endpoint: oss-cn-chengdu.aliyuncs.com #endpoint地域节点
+  #    bucket-name: mijiu-test   #存储桶名称
+
+  sms:
+    access-key-id: LTAI5t7Kt1Ez3cge3aCAF9Ei
+    access-key-secret: on45H8WMlsgrOySHJM97trpnG6m1n1
+    endpoint: dysmsapi.aliyuncs.com
+    signName: mi9688
+    templateCode: SMS_465440884
+
+
+
+
